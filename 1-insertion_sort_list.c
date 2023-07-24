@@ -14,41 +14,34 @@
 
 void insertion_sort_list(listint_t **list)
 {
-	listint_t *swap_element, *next_element;
+	listint_t *node = NULL, *tmp = NULL;
 
-	if (list == NULL || *list == NULL)
+	if (list == NULL || *list == NULL || (*list)->next == NULL)
 	{
 		return;
 	}
 
-	swap_element = (*list)->next;
-
-	while (swap_element != NULL)
+	node = *list;
+	node = node->next;
+	while (node)
 	{
-		next_element = swap_element->next;
-
-		while (swap_element->prev != NULL &&
-				swap_element->prev->n > swap_element->n)
+		while (node->prev && node->n < (node->prev)->n)
 		{
-			swap_element->prev->next = swap_element->next;
-
-			if (swap_element->next != NULL)
-			{
-				swap_element->next->prev = swap_element->prev;
-				swap_element->next = swap_element->prev;
-				swap_element->prev = swap_element->next->prev;
-				swap_element->next->prev = swap_element;
-
-				if (swap_element->prev == NULL)
-				{
-					*list = swap_element;
-				}
-				else
-				{
-					swap_element->prev->next = swap_element;
-				}
-				print_list(*list);
-			}
-		} swap_element = next_element;
+			tmp = node;
+			if (node->next)
+				(node->next)->prev = tmp->prev;
+			(node->prev)->next = tmp->next;
+			node = node->prev;
+			tmp->prev = node->prev;
+			tmp->next = node;
+			if (node->prev)
+				(node->prev)->next = tmp;
+			node->prev = tmp;
+			if (tmp->prev == NULL)
+				*list = tmp;
+			print_list(*list);
+			node = node->prev;
+		}
+		node = node->next;
 	}
 }
