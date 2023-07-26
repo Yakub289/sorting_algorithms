@@ -50,9 +50,10 @@ typedef struct deck_node_s
 } deck_node_t;
 
 /********** Prototypes **********/
-void sort_deck(deck_node_t **deck);
-int card_value(deck_node_t *node);
 int _strcmp(const char *s1, const char *s2);
-size_t list_len_deck(deck_node_t *list);
+char get_value(deck_node_t *card);
+void insertion_sort_deck_kind(deck_node_t **deck);
+void insertion_sort_deck_value(deck_node_t **deck);
+void sort_deck(deck_node_t **deck);
 
 #endif /* _DECK_H_ */
